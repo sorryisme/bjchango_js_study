@@ -1,5 +1,14 @@
+### 리뷰 요청드립니다
 
-리뷰 부탁드립니다.
+- branch : review
+
+- 진행사항
+  - express,Graphql,mysql 서버 적용
+    - query , mutation 테스트 완료(Postman)
+  - 성준님 리뷰사항 수정완료
+    - Try catch finally 적용
+    - pool.getConnection 내 파라미터 제거
+  - 그 외 변수명, 함수명 수정
 
 
 # Project bjchango Study
