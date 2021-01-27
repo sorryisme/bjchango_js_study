@@ -10,7 +10,6 @@
     - pool.getConnection 내 파라미터 제거
   - 그 외 변수명, 함수명 수정
 
-
 # Project bjchango Study
 
 
