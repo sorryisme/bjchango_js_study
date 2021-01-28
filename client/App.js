@@ -24,12 +24,28 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+
+
+import { ApolloClient, InMemoryCache , gql } from '@apollo/client';
+import { createHttpLink } from "apollo-link-http"
+import { ApolloProvider } from "@apollo/react-hooks"
+import User from './components/User'
+
+
+const client = new ApolloClient({
+  link: createHttpLink({ uri: "http://192.168.0.41:3000/user" }),
+  cache: new InMemoryCache()
+});
+
+
 const App: () => React$Node = () => {
   return (
     <>
+      {/* 최상단 상태 표시 */}
       <StatusBar barStyle="dark-content" />
+
       <SafeAreaView>
-        <ScrollView
+        <ScrollView 
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
           <Header />
@@ -52,26 +68,18 @@ const App: () => React$Node = () => {
                 <ReloadInstructions />
               </Text>
             </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
+            {/* Apollo Provider client */}
+            <ApolloProvider client={client}>
+                <User />
+            </ApolloProvider>
+            {/* end */}
           </View>
         </ScrollView>
       </SafeAreaView>
     </>
   );
 };
-
+        
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: Colors.lighter,
