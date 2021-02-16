@@ -24,99 +24,52 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import {
+  Container 
+} from 'native-base';
 
 
 import { ApolloClient, InMemoryCache , gql } from '@apollo/client';
 import { createHttpLink } from "apollo-link-http"
 import { ApolloProvider } from "@apollo/react-hooks"
-import User from './components/User'
+import User from './src/components/user/User'
 
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeScreen from './src/components/home/home'
+import LoginScreen from './src/components/login/login'
+import apolloClient from './src/components/utils/apolloClient'
+import StockScreen from './src/components/stock';
+const Stack = createStackNavigator();
+// const client = new ApolloClient({
+//   link: createHttpLink({ uri: "http://192.168.0.41:3000/user" }),
+//   cache: new InMemoryCache()
+// });
 
-const client = new ApolloClient({
-  link: createHttpLink({ uri: "http://192.168.0.41:3000/user" }),
-  cache: new InMemoryCache()
-});
+function Nav(){
+  return (
+    
+    <Container>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={HomeScreen} options={{ title : 'Home'}}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Container>
+  );
+}
 
-
-const App: () => React$Node = () => {
+const App = ({ navigation }) => {
   return (
     <>
-      {/* 최상단 상태 표시 */}
-      <StatusBar barStyle="dark-content" />
-
-      <SafeAreaView>
-        <ScrollView 
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            {/* Apollo Provider client */}
-            <ApolloProvider client={client}>
-                <User />
-            </ApolloProvider>
-            {/* end */}
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+      <ApolloProvider client={apolloClient}>
+        {/* <Nav /> */}
+        {/* <LoginScreen/> */}
+        <StockScreen/>
+      </ApolloProvider>
     </>
   );
 };
-        
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
 
 export default App;

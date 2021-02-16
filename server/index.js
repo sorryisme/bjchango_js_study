@@ -45,6 +45,7 @@ const typeDefs = gql`
     }
     type Mutation {
         signUp(id:String, name:String, email:String) : UserType
+        login(id:String!, pwd:String!) : UserType
     }
     type UserType {
         id: String
@@ -58,10 +59,28 @@ const resolvers = {
         users : async () => {
             const query = "SELECT id,name,email FROM TB_USER";
             const sendData = await execQuery(query)
+            console.log(sendData);
             return sendData;
         }
     },
     Mutation: { 
+        login : async (_, params ) => {
+            
+            let data = [];
+            data.push(params["id"]);
+            let query = "SELECT * FROM TB_USER WHERE ID = ?";
+            const selectData = await execQueryWithParam(query, data);
+            if(!selectData) {
+                return '';
+            }
+
+            query = "UPDATE TB_USER SET LOGIN_DT = NOW() WHERE ID = ?";
+            const updateData = await execQueryWithParam(query, data);
+            if(!updateData || updateData.affectedRows <= 0 ) {
+                return '';
+            }
+            return selectData[0];
+        },
         signUp : async (_, params) => {
             
             let data = [];

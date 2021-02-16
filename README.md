@@ -4,15 +4,31 @@
 
 - 진행사항
   - express,Graphql,mysql 서버 적용
+    
     - query , mutation 테스트 완료(Postman)
+    
   - 성준님 리뷰사항 수정완료
     - Try catch finally 적용
     - pool.getConnection 내 파라미터 제거
+    
   - 그 외 변수명, 함수명 수정
+  
+  - 안드로이드, IOS 설정 및 실행테스트 완료
+  
+  - index.js에서 graphql 호출하여 데이터 출력 완료
+  
+    - mysql에 저장된 유저정보의 이름과 이메일 출력
+  
+    <img src="./images/android_result.png" width="30%" height="30%" align="left" display="inline-block"><img src="./images/ios_result.png" width="30%" height="30%" align="center">
+  
+    
+  
+  
+
+
+
 
 # Project bjchango Study
-
-
 
 ## 요건사항
 
