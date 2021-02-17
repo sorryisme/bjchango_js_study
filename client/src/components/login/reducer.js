@@ -3,38 +3,25 @@ import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
-    CLEAR_ERROR,
     LOGOUT,
   } from './constants';
   
-  export const initialState = { isLogin: false, loginError: false, user: null };
+  export const initLoginState = { isLogin : false, user : {}, error : false, isRequest : false};
   
-  export function loginReducer(state = initialState, action) {
-    const newState = { ...state };
   
-    switch (action.type) {
+  export const loginReducer = (loginState = initLoginState , action) => {
+    
+    switch ( action.type ) {
       case LOGIN_REQUEST:
-        break;
+        return ({...loginState, isLogin : false, user : {}, error : false, isRequest : true})
       case LOGIN_SUCCESS:
-        newState.isLogin = true; 
-        newState.loginError = false;
-        newState.user = action.playload;
-        break;
+        return ({...loginState, isLogin : true, user : action.payload, error : false, isRequest : false})     
       case LOGIN_FAILURE:
-        newState.isLogin = false;
-        newState.loginError = true;
-        newState.user =  null;
-        break;
-      case CLEAR_ERROR:
-        newState.loginError = false;
-        break;
+          return ({...loginState, isLogin : false, user : {}, error : true, isRequest : false})     
       case LOGOUT:
-        newState.isLogin = false;
-        newState.user =  null;
-        break;
-      default:
-        break;
+          return ({...loginState, isLogin : false, user : {}, error : false, isRequest : false})     
+      default : 
+          return ({...loginState})
     }
-  
-    return newState;
+
   }

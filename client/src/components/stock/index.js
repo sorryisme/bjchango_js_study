@@ -4,14 +4,31 @@ import { Alert, TouchableOpacity, StyleSheet} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
 
-const StockScreen = () => {
+const StockScreen = (props) => {
+    // const { scanner } = props;
+    // console.log(scanner);
+    // console.log(this);
+    const [product,setProduct] = useState({
+        model:'',
+        lot:'',
+        order:'',
+        size:'',
+        cnt:''
+    })
     const onSuccess = e => {
+        console.log(e.data);
         const [ model, lot, order, size, cnt ] = e.data.split("/");
-        console.log(model);
-        console.log(lot);
-        console.log(order);
-        console.log(size);
-        console.log(cnt);
+
+        // setProduct({
+        //     ...product,
+        //     model : model,
+        //     lot : lot,
+        //     order : order,
+        //     size : size,
+        //     cnt : cnt,
+        // })
+        // console.log(product);   
+        // console.log(`model : ${model}, lot : ${lot}, order : ${order}, size : ${size}, cnt : ${cnt}` );
     }
 
     return (
@@ -24,10 +41,12 @@ const StockScreen = () => {
                     <Body>
                         <QRCodeScanner 
                             onRead={onSuccess} 
+                            reactivate={true}
+                            reactivateTimeout={1}
                             flashMode={RNCamera.Constants.FlashMode.off}
                                 bottomContent = {
                                     <TouchableOpacity style={styles.buttonTouchable}>
-                                    <Text style={styles.buttonText}>OK</Text>
+                                    {/* <Text style={styles.buttonText}>OK</Text> */}
                                     </TouchableOpacity>
                                 }           
                         />

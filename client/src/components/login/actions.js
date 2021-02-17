@@ -5,16 +5,16 @@ import {
     LOGOUT,
   } from './constants';
   
-  export function failure(error) {
-    return { type: LOGIN_FAILURE, error }; 
+  export function failure() {
+    return { type: LOGIN_FAILURE }; 
   }
   
-  export function login(playload) {
-    return { type: LOGIN_REQUEST, playload };
+  export function login(payload) {
+    return { type: LOGIN_REQUEST, payload };
   }
   
-  export function success(playload) {
-    return { type: LOGIN_SUCCESS, playload };
+  export function success(payload) {
+    return { type: LOGIN_SUCCESS, payload };
   }
   
   export function logout() {

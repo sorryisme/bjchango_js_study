@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -40,12 +40,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './src/components/home/home'
 import LoginScreen from './src/components/login/login'
 import apolloClient from './src/components/utils/apolloClient'
-import StockScreen from './src/components/stock';
+
+import { createLogger } from 'redux-logger'
+import { applyMiddleware, createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { loginReducer } from './src/components/login/reducer';
+
+
+
 const Stack = createStackNavigator();
-// const client = new ApolloClient({
-//   link: createHttpLink({ uri: "http://192.168.0.41:3000/user" }),
-//   cache: new InMemoryCache()
-// });
 
 function Nav(){
   return (
@@ -61,14 +64,17 @@ function Nav(){
 }
 
 const App = ({ navigation }) => {
+  const logger = createLogger();
+  let store = createStore(loginReducer, applyMiddleware(logger));
+  console.log(store);
   return (
-    <>
+    <Provider store={store}>
       <ApolloProvider client={apolloClient}>
         {/* <Nav /> */}
-        {/* <LoginScreen/> */}
-        <StockScreen/>
+        <LoginScreen/>
+        {/* <StockScreen/> */}
       </ApolloProvider>
-    </>
+    </Provider>
   );
 };
 

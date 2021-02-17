@@ -68,7 +68,8 @@ const resolvers = {
             
             let data = [];
             data.push(params["id"]);
-            let query = "SELECT * FROM TB_USER WHERE ID = ?";
+            data.push(params["pwd"]);
+            let query = "SELECT * FROM TB_USER WHERE ID = ? AND PWD = ?";
             const selectData = await execQueryWithParam(query, data);
             if(!selectData) {
                 return '';
